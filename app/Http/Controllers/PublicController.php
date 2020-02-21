@@ -2,16 +2,47 @@
 
 namespace App\Http\Controllers;
 
+use App\Post;
 use Illuminate\Http\Request;
 
 class PublicController extends Controller
 {
-    public function index($name) {
-      return view('welcome');
+    public function index() {
+
+      $posts = Post::all();
+      return view('welcome', compact('posts'));
     }
 
-    public function userInfo($userId, $name)
+    public function contact()
     {
-      return "User: " . $userId . ' - ' . $name;
+      return view('contact');
     }
+
+    public function contactPost(Request $request)
+    {
+      if($request->hasFile('attachment')){
+          $file =$request->file('attachment');
+
+          echo "File name" . $file->getClientOriginalName();
+          echo "<br>";
+
+      } else {
+        return "No";
+      }
+      var_dump($request->all());
+    }
+
+    // public function userInfo($userId, $name)
+    // {
+    //   return "User: " . $userId . ' - ' . $name;
+    // }
+    // public function displayPosts()
+    // {
+    //   $posts = Post::all();
+    //
+    //   foreach ($posts as $post)
+    //   {
+    //     print $post->title . '<br>';
+    //   }
+    // }
 }
